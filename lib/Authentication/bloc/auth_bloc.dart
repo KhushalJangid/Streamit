@@ -9,49 +9,55 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthInitial()) {
-    _initialize();
-
-    // on<GetStartedClicked>((event, emit) => emit(LoginState()));
-
+  AuthBloc() : super(AuthLoading()) {
+    initialize();
+    on<AuthLoaded>((event, emit) {
+      if (event.loggedin) {
+        emit(Authenticated());
+      } else {
+        emit(NotAuthenticated());
+      }
+    });
     on<LoginButtonPressed>((event, emit) async {
       emit(AuthLoading());
-      // User? user = await GoogleSignInProvider().signInWithGoogle();
       bool user = await login(event.email, event.password);
       if (user == false) {
-        emit(AuthFailure());
+        emit(LoginFailure());
+      } else {
+        emit(Authenticated());
+      }
+    });
+    on<SignupButtonPressed>((event, emit) async {
+      emit(AuthLoading());
+      bool user = await signup(event.email, event.password);
+      if (user == false) {
+        emit(LoginFailure());
       } else {
         emit(Authenticated());
       }
     });
 
-    // on<SetupInitiate>((event, emit) => emit(CurrencyState()));
     on<LogoutButtonPressed>((event, emit) async {
       SharedPreferences.getInstance().then((value) => value.clear());
       emit(NotAuthenticated());
     });
-    on<SetupComplete>((event, emit) => emit(Authenticated()));
-    // close();
-  }
-
-  @override
-  void onTransition(Transition<AuthEvent, AuthState> transition) {
-    // TODO: implement onTransition
-    super.onTransition(transition);
-  }
-
-  void _initialize() async {
-    final loggedin = await StorageManager.readData("token");
-
-    if (loggedin) {
-      bool? setupComplete = await StorageManager.readData('Setup');
-      if (setupComplete != null && setupComplete == true) {
-        emit(Authenticated());
-      } else {
-        emit(LoginState());
-      }
-    } else {
+    on<OnboardingButtonPressed>((event, emit) async {
+      StorageManager.saveData("selectedTag", event.selectedTag);
+      emit(Authenticated());
+    });
+    on<NavigateLogin>((event, emit) {
       emit(NotAuthenticated());
-    }
+    });
+    on<NavigateSignup>((event, emit) {
+      emit(SignupState());
+    });
+    on<NavigateOnboarding>((event, emit) {
+      emit(OnboardingState());
+    });
+  }
+
+  void initialize() async {
+    final loggedin = await StorageManager.readData("token");
+    add(AuthLoaded(loggedin));
   }
 }

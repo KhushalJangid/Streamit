@@ -1,6 +1,7 @@
 import 'package:streamit/Authentication/bloc/auth_bloc.dart';
 import 'package:streamit/Authentication/presentation/Screens/login.dart';
 import 'package:streamit/Authentication/presentation/Screens/setup.dart';
+import 'package:streamit/Authentication/presentation/Screens/signup.dart';
 import 'package:streamit/MainPage/Presentation/Screens/mainpage.dart';
 import 'package:streamit/MainPage/cubit/tab_cubit.dart';
 import 'package:streamit/Theme/theme.dart';
@@ -37,16 +38,16 @@ class MyApp extends StatelessWidget {
           theme: theme,
           darkTheme: darkTheme,
           home: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-            if (state is AuthInitial) {
-              return const SplashPage(); //then authbloc can handle
-            } else if (state is NotAuthenticated) {
-              return const SetupAccountPage();
-            } else if (state is AuthFailure ||
-                state is LoginState ||
-                state is AuthLoading) {
-              return const LoginPage();
-            } else {
+            if (state is Authenticated) {
               return MainPage();
+            } else if (state is NotAuthenticated || state is LoginFailure) {
+              return const LoginPage();
+            } else if (state is SignupState || state is SignupFailure) {
+              return const SignupPage();
+            } else if (state is OnboardingState) {
+              return const OnboardingPage();
+            } else {
+              return const SplashPage(); //then authbloc can handle
             }
           }),
           debugShowCheckedModeBanner: false,

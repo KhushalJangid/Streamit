@@ -2,14 +2,14 @@ import 'package:streamit/Authentication/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignupPageState extends State<SignupPage> {
   bool _obscureText = true;
   var icon = Icon(Icons.remove_red_eye_outlined);
 
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
         // }
       },
       builder: (context, state) {
-        if (state is SignupState) {
+        if (state is NotAuthenticated) {
           return SingleChildScrollView(
             child: Form(
               key: _formkey,
