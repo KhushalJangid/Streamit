@@ -57,7 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void initialize() async {
-    final loggedin = await StorageManager.readData("token");
+    final bool loggedin = (await StorageManager.readData("token")) ?? false;
     add(AuthLoaded(loggedin));
   }
 }

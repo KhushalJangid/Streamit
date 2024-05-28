@@ -11,21 +11,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
-  var icon = Icon(Icons.remove_red_eye_outlined);
+  var icon = const Icon(Icons.remove_red_eye_outlined);
 
   final _formkey = GlobalKey<FormState>();
   final email = TextEditingController();
   final password = TextEditingController();
-  // final minSize = Size(48, 48);
-  // final maxSize = Size(75, 75);
 
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
       if (_obscureText == true) {
-        icon = Icon(Icons.remove_red_eye_outlined);
+        icon = const Icon(Icons.remove_red_eye_outlined);
       } else {
-        icon = Icon(Icons.remove_red_eye);
+        icon = const Icon(Icons.remove_red_eye);
       }
     });
   }
@@ -38,51 +36,50 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        // if (state is  AuthFailure) {
-        //   ScaffoldMessenger.of(context)
-        //       .showSnackBar(const SnackBar(content: Text('Login Failed')));
-        // }
-        // if (state is SetupState) {
-        //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-        //     return const SetupAccountPage();
-        //   }));
-        // }
-        // if (state is Authenticated) {
-        //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-        //     return  MainPage();
-        //   }));
-        // }
+        if (state is LoginFailure) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('Login Failed')));
+        }
       },
       builder: (context, state) {
-        if (state is SignupState) {
-          return SingleChildScrollView(
+        return SafeArea(
+          child: SingleChildScrollView(
             child: Form(
               key: _formkey,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Login",
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                     const SizedBox(
                       height: 100.0,
                     ),
-                    Text("Email", style: Theme.of(context).textTheme.headline2),
+                    Text(
+                      "Email",
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
                     const SizedBox(
                       height: 15,
                     ),
                     TextFormField(
                       controller: email,
                       style: Theme.of(context).inputDecorationTheme.labelStyle,
+                      decoration: const InputDecoration(
+                        hintText: "Email",
+                      ),
                     ),
                     const SizedBox(
                       height: 20.0,
                     ),
-                    Text("Password",
-                        style: Theme.of(context).textTheme.headline2),
+                    Text(
+                      "Password",
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -100,46 +97,41 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: _obscureText,
                       obscuringCharacter: "*",
                     ),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text("Forgot password ?")),
-                      ],
-                    ),
-                    const SizedBox(height: 80.0),
                     TextButton(
                         onPressed: () {},
+                        child: const Text("Forgot password ?")),
+                    const SizedBox(height: 40.0),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          authbloc.add(
+                            LoginButtonPressed(email.text, password.text),
+                          );
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 60.0),
+                    Center(
+                      child: TextButton(
+                        onPressed: () {
+                          authbloc.add(NavigateSignup());
+                        },
                         child: const Text(
                           "Don't have an account? Signup",
                           style: TextStyle(fontSize: 14),
-                        )),
-                    ElevatedButton(
-                      onPressed: () {
-                        authbloc.add(
-                          LoginButtonPressed(email.text, password.text),
-                        );
-                      },
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 10)),
+                        ),
                       ),
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+          ),
+        );
       },
     ));
   }

@@ -62,19 +62,35 @@ ThemeData lightTheme(BuildContext context) {
     iconTheme: const IconThemeData(color: Colors.black),
     primaryIconTheme: const IconThemeData(color: Color(0xff7F3DFF), size: 16),
     inputDecorationTheme: InputDecorationTheme(
+      fillColor: Colors.white60,
+      filled: true,
       hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
       prefixStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       suffixIconColor: primaryColor,
       suffixStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       errorStyle:
           TextStyle(color: Colors.red.shade400, fontWeight: FontWeight.bold),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       constraints: BoxConstraints(
         maxWidth: deviceWidth * 0.8,
       ),
-      border: const OutlineInputBorder(borderSide: BorderSide.none),
-      enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
-      focusedBorder: const OutlineInputBorder(borderSide: BorderSide.none),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: primaryColor, width: 2.0),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: primaryColor, width: 2.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.red, width: 1.5),
+      ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         shape: CircleBorder(), elevation: 5),

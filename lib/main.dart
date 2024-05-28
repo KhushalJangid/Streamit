@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           darkTheme: darkTheme,
           home: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+            // print(state);
             if (state is Authenticated) {
               return MainPage();
             } else if (state is NotAuthenticated || state is LoginFailure) {
@@ -72,9 +73,9 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(child: Image.asset('assets/splash.png')),
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
