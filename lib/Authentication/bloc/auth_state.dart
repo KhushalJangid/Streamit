@@ -15,4 +15,7 @@ final class SignupState extends AuthState {}
 
 final class SignupFailure extends AuthState {}
 
-final class OnboardingState extends AuthState {}
+final class OnboardingState extends AuthState {
+  final List<String> tags;
+  OnboardingState(this.tags);
+}

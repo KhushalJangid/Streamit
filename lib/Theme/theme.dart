@@ -27,6 +27,7 @@ ThemeData lightTheme(BuildContext context) {
   const primaryColor = Colors.black;
   final deviceWidth = MediaQuery.of(context).size.width;
   return ThemeData(
+    fontFamily: 'Nexa',
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
       TargetPlatform.android: CupertinoPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
@@ -34,12 +35,21 @@ ThemeData lightTheme(BuildContext context) {
     // fontFamily: 'nexa',
     useMaterial3: true,
     colorScheme: ColorScheme.light(
-        primary: primaryColor,
-        onPrimary: Colors.white,
-        secondary: const Color(0xffefefef),
-        onSecondary: Colors.white,
-        tertiary: Colors.grey.shade200,
-        onTertiary: Colors.black),
+      primary: primaryColor,
+      onPrimary: Colors.white,
+      secondary: const Color(0xffefefef),
+      onSecondary: Colors.white,
+      tertiary: Colors.grey.shade200,
+      onTertiary: Colors.black,
+    ),
+    // appBarTheme: AppBarTheme(
+    //   color: Colors.white,
+    //   shadowColor: Colors.grey.shade300,
+    // ),
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: Colors.white,
+      shadowColor: Colors.grey.shade300,
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         textStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -77,11 +87,11 @@ ThemeData lightTheme(BuildContext context) {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: primaryColor, width: 2.0),
+        borderSide: const BorderSide(color: primaryColor, width: 2.0),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: primaryColor, width: 2.0),
+        borderSide: const BorderSide(color: primaryColor, width: 2.0),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -93,22 +103,28 @@ ThemeData lightTheme(BuildContext context) {
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        shape: CircleBorder(), elevation: 5),
+      shape: CircleBorder(),
+      elevation: 5,
+    ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
-        color: primaryColor,
-        fontSize: 40,
+        fontFamily: 'Nexa',
         fontWeight: FontWeight.bold,
       ),
-      displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      labelLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      labelMedium: TextStyle(fontSize: 20),
-      labelSmall: TextStyle(
-          fontSize: 8,
-          color: Colors.black,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w400),
+      displayMedium: TextStyle(
+        fontFamily: 'Nexa',
+        fontWeight: FontWeight.bold,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'Nexa',
+        // fontWeight: FontWeight.w500,
+      ),
+      // but: TextStyle(
+      //   fontFamily: 'Nexa',
+      //   fontWeight: FontWeight.bold,
+      // ),
     ),
+    dividerColor: Colors.grey,
   );
 }
 

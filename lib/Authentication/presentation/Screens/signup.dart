@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:streamit/Authentication/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +14,7 @@ class _SignupPageState extends State<SignupPage> {
   var icon = const Icon(Icons.remove_red_eye_outlined);
 
   final _formkey = GlobalKey<FormState>();
+  final name = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
 
@@ -33,8 +32,6 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     final authbloc = BlocProvider.of<AuthBloc>(context);
-    // double h = MediaQuery.of(context).size.height;
-    // double w = MediaQuery.of(context).size.width;
     return Scaffold(
         body: BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
@@ -56,14 +53,31 @@ class _SignupPageState extends State<SignupPage> {
                   children: [
                     Text(
                       "Signup",
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                     const SizedBox(
                       height: 100.0,
                     ),
                     Text(
+                      "Name",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: name,
+                      style: Theme.of(context).inputDecorationTheme.labelStyle,
+                      decoration: const InputDecoration(
+                        hintText: "Name",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    Text(
                       "Email",
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(
                       height: 15,
@@ -80,7 +94,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     Text(
                       "Password",
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(
                       height: 15,

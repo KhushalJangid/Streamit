@@ -20,16 +20,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<LoginButtonPressed>((event, emit) async {
       emit(AuthLoading());
-      bool user = await login(event.email, event.password);
-      if (user == false) {
-        emit(LoginFailure());
-      } else {
-        emit(Authenticated());
-      }
+      emit(OnboardingState(const [
+        "GATE",
+        "IIT-JAM",
+        "IIT-JEE",
+        "CSIR",
+        "CAT",
+      ]));
+      // bool user = await UserApi().login(event.email, event.password);
+      // if (user == false) {
+      //   emit(LoginFailure());
+      // } else {
+      //   emit(OnboardingState([]));
+      // }
     });
     on<SignupButtonPressed>((event, emit) async {
       emit(AuthLoading());
-      bool user = await signup(event.email, event.password);
+      bool user = await UserApi().signup(event.email, event.password);
       if (user == false) {
         emit(LoginFailure());
       } else {
@@ -50,9 +57,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<NavigateSignup>((event, emit) {
       emit(SignupState());
-    });
-    on<NavigateOnboarding>((event, emit) {
-      emit(OnboardingState());
     });
   }
 

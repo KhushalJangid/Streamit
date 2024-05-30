@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:streamit/HomePage/Data/homedata.dart';
 import 'package:streamit/HomePage/bloc/home_bloc.dart';
-import 'package:streamit/HomePage/cubit/notificationCount.dart';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -18,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -25,31 +20,102 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        scrolledUnderElevation: 0.0,
-        centerTitle: true,
-        actions: [],
-      ),
-      body: BlocConsumer<HomeBloc, HomeState>(
-          builder: (context, state) {
-            if (state is HomeLoaded) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [],
-                ),
-              );
-            } else if (state is HomeLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              //error
-              return const Center(
-                child: Text('Error Occured'),
-              );
-            }
-          },
-          listener: (context, state) {}),
-    );
+    final bloc = BlocProvider.of<HomeBloc>(context);
+    return BlocConsumer<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is HomeLoaded) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  StatefulBuilder(builder: (context, setState) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      width: double.maxFinite,
+                      // padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 15,
+                            color: Theme.of(context)
+                                .bottomAppBarTheme
+                                .shadowColor!,
+                          ),
+                        ],
+                        // color: Theme.of(context).bottomAppBarTheme.color,
+                      ),
+                      child: Row(
+                        children: [
+                          TextFormField(
+                            controller: searchController,
+                            onChanged: (v) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: () {},
+                                icon: searchController.text.isNotEmpty
+                                    ? const Icon(Icons.clear)
+                                    : const Icon(Icons.search),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.notifications_outlined,
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            );
+          } else if (state is HomeLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is NoInternet) {
+            return SizedBox(
+              width: double.maxFinite,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.wifi_off,
+                    size: 40,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    "No Internet",
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  IconButton.outlined(
+                    onPressed: () {
+                      bloc.add(HomeLoadEvent());
+                    },
+                    icon: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.refresh),
+                        Text("Refresh"),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text('Error Occured'),
+            );
+          }
+        },
+        listener: (context, state) {});
   }
 }

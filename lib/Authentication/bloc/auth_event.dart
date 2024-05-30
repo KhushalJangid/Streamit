@@ -30,5 +30,3 @@ final class LogoutButtonPressed extends AuthEvent {}
 final class NavigateLogin extends AuthEvent {}
 
 final class NavigateSignup extends AuthEvent {}
-
-final class NavigateOnboarding extends AuthEvent {}

@@ -54,14 +54,14 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       "Login",
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                     const SizedBox(
                       height: 100.0,
                     ),
                     Text(
                       "Email",
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(
                       height: 15,
@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Text(
                       "Password",
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(
                       height: 15,
