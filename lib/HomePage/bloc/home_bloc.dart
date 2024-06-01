@@ -10,7 +10,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeLoading()) {
     on<HomeLoadEvent>((event, emit) async {
       final c = await checkConnection();
-      print(c);
       if (c) {
         HomeScreenData? homeScreenData = await HomeDataBaseQuery().initData();
         if (homeScreenData != null) {

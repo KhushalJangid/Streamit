@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:streamit/Authentication/data/data_provider/authentication.dart';
 import 'package:streamit/DatabaseConfig/storagemanager.dart';
 import 'package:meta/meta.dart';
@@ -20,25 +21,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<LoginButtonPressed>((event, emit) async {
       emit(AuthLoading());
-      emit(OnboardingState(const [
-        "GATE",
-        "IIT-JAM",
-        "IIT-JEE",
-        "CSIR",
-        "CAT",
-      ]));
-      // bool user = await UserApi().login(event.email, event.password);
-      // if (user == false) {
-      //   emit(LoginFailure());
-      // } else {
-      //   emit(OnboardingState([]));
-      // }
+      try {
+        bool user = await UserApi().login(event.email, event.password);
+        if (user == true) {
+          emit(OnboardingState(const [
+            "GATE",
+            "IIT-JAM",
+            "IIT-JEE",
+            "CSIR",
+            "CAT",
+          ]));
+        }
+      } catch (e) {
+        emit(LoginFailure(e.toString()));
+      }
     });
     on<SignupButtonPressed>((event, emit) async {
       emit(AuthLoading());
       bool user = await UserApi().signup(event.email, event.password);
       if (user == false) {
-        emit(LoginFailure());
+        emit(SignupFailure());
       } else {
         emit(Authenticated());
       }
@@ -61,7 +63,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void initialize() async {
-    final bool loggedin = (await StorageManager.readData("token")) ?? false;
+    final bool loggedin =
+        (await const FlutterSecureStorage().read(key: "token")) != null
+            ? true
+            : false;
     add(AuthLoaded(loggedin));
   }
 }

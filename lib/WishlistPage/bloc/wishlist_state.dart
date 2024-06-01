@@ -7,7 +7,10 @@ final class WishlistInitial extends WishlistState {}
 
 final class WishlistLoading extends WishlistState {}
 
-final class WishlistLoaded extends WishlistState {}
+final class WishlistLoaded extends WishlistState {
+  final List<CourseMedia> data;
+  WishlistLoaded(this.data);
+}
 
 final class Wishlist404 extends WishlistState {}
 

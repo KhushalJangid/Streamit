@@ -9,7 +9,10 @@ final class Authenticated extends AuthState {}
 
 final class NotAuthenticated extends AuthState {}
 
-final class LoginFailure extends AuthState {}
+final class LoginFailure extends AuthState {
+  final String error;
+  LoginFailure(this.error);
+}
 
 final class SignupState extends AuthState {}
 

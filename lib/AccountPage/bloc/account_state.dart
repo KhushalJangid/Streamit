@@ -7,8 +7,9 @@ final class AccountInitial extends AccountState {}
 
 final class AccountLoading extends AccountState {}
 
-final class AccountLoaded extends AccountState {}
+final class AccountLoaded extends AccountState {
+  final UserMedia data;
+  AccountLoaded(this.data);
+}
 
 final class Account404 extends AccountState {}
-
-final class NoInternet extends AccountState {}

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
+import 'package:streamit/DatabaseConfig/course_model.dart';
 import 'package:streamit/DatabaseConfig/notification_model.dart';
 
 class MasterDB {
@@ -25,6 +26,7 @@ class MasterDB {
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT';
+    const intType = 'INTEGER';
     const notNull = 'NOT NULL';
 //     debugPrint('!!!!!Transaction Table CREATED !!!!!');
 //     await db.execute('''
@@ -50,15 +52,18 @@ class MasterDB {
 //         ${RecurringField.created} $textType $notNull
 //       )
 // ''');
-//     debugPrint('!!!!!Category Table CREATED !!!!!');
-//     await db.execute('''
-//       CREATE TABLE $categoryTable(
-//         ${CategoryField.id} $idType,
-//         ${CategoryField.title} $textType $notNull,
-//         ${CategoryField.icon} $numType $notNull,
-//         ${CategoryField.type} $textType $notNull
-//       )
-// ''');
+    debugPrint('!!!!!Category Table CREATED !!!!!');
+    await db.execute('''
+      CREATE TABLE $wishlist_table_name(
+        ${CourseField.id} $intType $notNull UNIQUE,
+        ${CourseField.title} $textType $notNull,
+        ${CourseField.thumbnail} $textType $notNull,
+        ${CourseField.type} $textType $notNull,
+        ${CourseField.uniqueName} $textType $notNull,
+        ${CourseField.price} $intType,
+        ${CourseField.uploaded} $textType $notNull
+      )
+''');
     debugPrint('!!!!!Notification Table CREATED !!!!!');
     await db.execute('''
       CREATE TABLE $notificationTableName(
@@ -83,8 +88,12 @@ class MasterDB {
   //   }
   // }
 
-  Future create(dynamic media) async {
-    if (media.runtimeType == Notification) {
+  Future create(dynamic media, String tableName) async {
+    if (tableName == wishlist_table_name) {
+      final db = await instance.database;
+      await db.insert(wishlist_table_name, media.toJson());
+      return media;
+    } else if (media.runtimeType == Notification) {
       final db = await instance.database;
       final id = await db.insert(notificationTableName, media.toJson());
       return media.copy(id: id);
@@ -114,7 +123,12 @@ class MasterDB {
   }
 
   Future<List> readAllNotes(String table) async {
-    if (table == notificationTableName) {
+    if (table == wishlist_table_name) {
+      final db = await instance.database;
+      const orderBy = CourseField.uploaded;
+      final result = await db.query(wishlist_table_name, orderBy: orderBy);
+      return result.map((json) => CourseMedia.fromJson(json)).toList();
+    } else if (table == notificationTableName) {
       final db = await instance.database;
       const orderBy = NotificationField.datetime;
       final result = await db.query(notificationTableName, orderBy: orderBy);

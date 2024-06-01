@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:streamit/HomePage/Presentation/homepage.dart';
 import 'package:streamit/MyCoursePage/bloc/course_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -26,14 +24,16 @@ class _CoursePageState extends State<CoursePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text("My Courses"),
+        title: const Text("My Courses"),
       ),
       body: BlocConsumer<CourseBloc, CourseState>(
           builder: (context, state) {
             if (state is CourseLoaded) {
               return SingleChildScrollView(
                 child: Column(
-                  children: [],
+                  children: [
+                    for (var course in state.data) CourseCard(media: course)
+                  ],
                 ),
               );
             } else if (state is CourseLoading) {
@@ -69,8 +69,14 @@ class _CoursePageState extends State<CoursePage> {
                   ],
                 ),
               );
+            } else if (state is Course404) {
+              return Center(
+                child: Lottie.asset(
+                  'assets/animations/404.json',
+                  repeat: false,
+                ),
+              );
             } else {
-              //error
               return const Center(
                 child: Text('Error Occured'),
               );

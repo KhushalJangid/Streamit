@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streamit/AccountPage/bloc/account_bloc.dart';
 
@@ -33,7 +32,8 @@ class _AccountPageState extends State<AccountPage> {
       ),
       body: BlocConsumer<AccountBloc, AccountState>(
           builder: (context, state) {
-            if (state is AccountLoaded || state is NoInternet) {
+            if (state is AccountLoaded) {
+              final data = state.data;
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -54,7 +54,29 @@ class _AccountPageState extends State<AccountPage> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Khushal Jangid",
+                            "${data.firstName} ${data.lastName}",
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            data.email,
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ),
+                        const Divider(),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "+91-${data.phone}",
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
@@ -66,39 +88,7 @@ class _AccountPageState extends State<AccountPage> {
               );
             } else if (state is AccountLoading) {
               return const Center(child: CircularProgressIndicator());
-              // } else if (state is NoInternet) {
-              //   return SizedBox(
-              //     width: double.maxFinite,
-              //     child: Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         const Icon(
-              //           Icons.wifi_off,
-              //           size: 40,
-              //           color: Colors.amber,
-              //         ),
-              //         Text(
-              //           "No Internet",
-              //           style: Theme.of(context).textTheme.labelMedium,
-              //         ),
-              //         const SizedBox(
-              //           height: 20,
-              //         ),
-              //         IconButton.outlined(
-              //           onPressed: () {},
-              //           icon: const Row(
-              //             mainAxisSize: MainAxisSize.min,
-              //             children: [
-              //               Icon(Icons.refresh),
-              //               Text("Refresh"),
-              //             ],
-              //           ),
-              //         )
-              //       ],
-              //     ),
-              //   );
             } else {
-              //error
               return const Center(
                 child: Text('Error Occured'),
               );
