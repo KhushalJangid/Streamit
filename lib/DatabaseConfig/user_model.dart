@@ -69,7 +69,7 @@ class UserMedia {
       UserField.email: email,
       UserField.phone: phone,
       UserField.address: address,
-      UserField.dob: dob.toLocal(),
+      UserField.dob: dob.toString(),
     };
   }
 
@@ -80,7 +80,7 @@ class UserMedia {
       StorageManager.saveData(UserField.firstname, firstName);
       StorageManager.saveData(UserField.lastname, lastName);
       StorageManager.saveData(UserField.avatar, avatar);
-      StorageManager.saveData(UserField.dob, dob);
+      StorageManager.saveData(UserField.dob, dob.toString());
       StorageManager.saveData(UserField.address, address);
       StorageManager.saveData(UserField.email, email);
       StorageManager.saveData(UserField.phone, phone);
@@ -102,7 +102,7 @@ class UserMedia {
         email: await StorageManager.readData(UserField.email),
         phone: await StorageManager.readData(UserField.phone),
         address: await StorageManager.readData(UserField.address),
-        dob: await StorageManager.readData(UserField.dob),
+        dob: DateTime.parse(await StorageManager.readData(UserField.dob)),
       );
     } catch (e) {
       debugPrint(e.toString());

@@ -5,6 +5,7 @@ class CourseField {
   static const String title = "title";
   static const String thumbnail = "thumbnail";
   static const String uniqueName = "uniqueName";
+  static const String description = "description";
   static const String type = "type";
   static const String price = "price";
   static const String uploaded = "uploadDate";
@@ -12,6 +13,7 @@ class CourseField {
     id,
     thumbnail,
     uniqueName,
+    description,
     title,
     type,
     price,
@@ -24,6 +26,7 @@ class CourseMedia {
   final String title;
   final String thumbnail;
   final String type;
+  final String description;
   final String uniqueName;
   final int price;
   final DateTime uploaded;
@@ -31,6 +34,7 @@ class CourseMedia {
     required this.id,
     required this.title,
     required this.thumbnail,
+    required this.description,
     required this.type,
     required this.uniqueName,
     required this.price,
@@ -41,6 +45,7 @@ class CourseMedia {
       id: data[CourseField.id],
       title: data[CourseField.title],
       thumbnail: data[CourseField.thumbnail],
+      description: data[CourseField.description],
       type: data[CourseField.type],
       uniqueName: data[CourseField.uniqueName],
       price: data[CourseField.price],
@@ -53,9 +58,44 @@ class CourseMedia {
       CourseField.id: id,
       CourseField.title: title,
       CourseField.thumbnail: thumbnail,
+      CourseField.description: description,
       CourseField.type: type,
       CourseField.uniqueName: uniqueName,
       CourseField.price: price,
+      CourseField.uploaded: uploaded,
+    };
+  }
+}
+
+class VideoMedia {
+  final int id;
+  final String title;
+  final String thumbnail;
+  final String uniqueName;
+  final DateTime uploaded;
+  const VideoMedia({
+    required this.id,
+    required this.title,
+    required this.thumbnail,
+    required this.uniqueName,
+    required this.uploaded,
+  });
+  static VideoMedia fromJson(data) {
+    return VideoMedia(
+      id: data[CourseField.id],
+      title: data[CourseField.title],
+      thumbnail: data[CourseField.thumbnail],
+      uniqueName: data[CourseField.uniqueName],
+      uploaded: DateTime.parse(data[CourseField.uploaded]),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      CourseField.id: id,
+      CourseField.title: title,
+      CourseField.thumbnail: thumbnail,
+      CourseField.uniqueName: uniqueName,
       CourseField.uploaded: uploaded,
     };
   }

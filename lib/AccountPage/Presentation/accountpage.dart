@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streamit/AccountPage/bloc/account_bloc.dart';
@@ -55,7 +56,7 @@ class _AccountPageState extends State<AccountPage> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "${data.firstName} ${data.lastName}",
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                         const Divider(),
@@ -66,18 +67,19 @@ class _AccountPageState extends State<AccountPage> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             data.email,
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                         const Divider(),
                         const SizedBox(
                           height: 30,
                         ),
+                        CupertinoListTile(title: Text("Title")),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "+91-${data.phone}",
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                         const Divider(),

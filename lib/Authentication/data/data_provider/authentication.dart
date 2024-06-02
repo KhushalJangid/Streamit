@@ -2,9 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:streamit/DatabaseConfig/user_model.dart';
-
-const String baseUrl = 'http://192.168.62.90:8000';
-const timeLimit = Duration(seconds: 5);
+import 'package:streamit/constants.dart';
 
 class UserApi {
   final CancelToken cancelToken;

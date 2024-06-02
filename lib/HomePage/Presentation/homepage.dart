@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streamit/DatabaseConfig/course_model.dart';
-import 'package:streamit/HomePage/Data/homedata.dart';
 import 'package:streamit/HomePage/bloc/home_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:streamit/constants.dart';
+import 'package:streamit/utils.dart';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -162,31 +162,34 @@ class CourseCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Stack(
         children: [
-          Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CachedNetworkImage(
-                      imageUrl: "$baseUrl${media.thumbnail}",
+          GestureDetector(
+            onTap: () => viewCourse(context, media.id),
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: "$baseUrl${media.thumbnail}",
+                      ),
                     ),
                   ),
-                ),
-                Text(media.title),
-                Text("₹${media.price}.00"),
-                Card.outlined(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
+                  Text(media.title),
+                  Text("₹${media.price}.00"),
+                  Card.outlined(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      child: Text(media.type),
                     ),
-                    child: Text(media.type),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
           Align(

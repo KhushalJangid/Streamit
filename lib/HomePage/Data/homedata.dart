@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:streamit/DatabaseConfig/course_model.dart';
+import 'package:streamit/constants.dart';
 
 class HomeScreenData {
   final List banners;
@@ -24,9 +25,6 @@ class HomeDataBaseQuery {
     }
   }
 }
-
-const String baseUrl = 'http://192.168.62.90:8000';
-const timeLimit = Duration(seconds: 5);
 
 class CoursesApi {
   final CancelToken cancelToken;

@@ -2,8 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:streamit/DatabaseConfig/course_model.dart';
 import 'package:streamit/DatabaseConfig/database.dart';
-
-const String baseUrl = 'http://192.168.62.90:8000';
+import 'package:streamit/constants.dart';
 
 Future<List<CourseMedia>> loadData() async {
   try {
