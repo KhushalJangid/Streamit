@@ -1,10 +1,14 @@
+import 'package:provider/provider.dart';
 import 'package:streamit/Authentication/bloc/auth_bloc.dart';
 import 'package:streamit/Authentication/presentation/Screens/login.dart';
 import 'package:streamit/Authentication/presentation/Screens/setup.dart';
 import 'package:streamit/Authentication/presentation/Screens/signup.dart';
 import 'package:streamit/MainPage/Presentation/Screens/mainpage.dart';
 import 'package:streamit/MainPage/cubit/tab_cubit.dart';
-import 'package:streamit/Theme/theme.dart';
+import 'package:streamit/Player/bloc/player_bloc.dart';
+import 'package:streamit/WishlistPage/bloc/wishlist_bloc.dart';
+import 'package:streamit/customPlayer/provider/orientation.dart';
+import 'package:streamit/theme.dart';
 import 'package:streamit/DatabaseConfig/storagemanager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,11 +32,14 @@ class MyApp extends StatelessWidget {
         BlocProvider<TabCubit>(
           create: (BuildContext context) => TabCubit(),
         ),
+        BlocProvider(create: ((context) => WishlistBloc())),
+        BlocProvider(create: ((context) => PlayerBloc())),
+        Provider(create: ((context) => OrientationProvider()))
       ],
       child: AdaptiveTheme(
         light: lightTheme(context),
         dark: darkTheme(context),
-        initial: themeNotifier() ?? AdaptiveThemeMode.light,
+        initial: themeNotifier() ?? AdaptiveThemeMode.system,
         builder: (theme, darkTheme) => MaterialApp(
           title: 'StreamIT',
           theme: theme,
@@ -90,8 +97,8 @@ themeNotifier() {
       case "system":
         return AdaptiveThemeMode.system;
       default:
-        StorageManager.saveData('themeMode', 'light');
-        return AdaptiveThemeMode.light;
+        StorageManager.saveData('themeMode', 'system');
+        return AdaptiveThemeMode.system;
     }
   });
 }

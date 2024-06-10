@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-const String notificationTableName = "notifications";
-
 class NotificationField {
   static const String id = "_id";
   static const String title = "title";

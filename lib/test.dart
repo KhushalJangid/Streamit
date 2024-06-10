@@ -67,7 +67,7 @@ class _SamplePlayerState extends State<SamplePlayer> {
   final videoPlayerController = VideoPlayerController.networkUrl(
     Uri.parse(
       // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-      'http://192.168.219.90:3000/media/playlist.m3u8',
+      "http://192.168.62.90:8000/media/output/['carry']_420.m3u8",
     ),
   );
   late ChewieController chewieController;
@@ -94,9 +94,14 @@ class _SamplePlayerState extends State<SamplePlayer> {
         textDirection: TextDirection.ltr,
         child: Scaffold(
           body: Center(
-            child: Chewie(
-              controller: chewieController,
-            ),
+            child: VideoPlayer(videoPlayerController),
+            // child: Chewie(controller: chewieController),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              videoPlayerController.play();
+            },
+            child: Icon(Icons.play_arrow),
           ),
         ),
       ),

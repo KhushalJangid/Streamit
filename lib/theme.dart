@@ -23,6 +23,8 @@ extension COLOR on ThemeColors {
   }
 }
 
+final Color accentColor = Colors.green.shade100;
+
 ThemeData lightTheme(BuildContext context) {
   const primaryColor = Colors.black;
   final deviceWidth = MediaQuery.of(context).size.width;
@@ -37,10 +39,8 @@ ThemeData lightTheme(BuildContext context) {
     colorScheme: ColorScheme.light(
       primary: primaryColor,
       onPrimary: Colors.white,
-      secondary: const Color(0xffefefef),
+      secondary: Colors.grey.shade700,
       onSecondary: Colors.white,
-      tertiary: Colors.grey.shade200,
-      onTertiary: Colors.black,
     ),
     // appBarTheme: AppBarTheme(
     //   color: Colors.white,
@@ -63,9 +63,21 @@ ThemeData lightTheme(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.15),
+        padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.12),
         maximumSize: Size(deviceWidth * 0.6, deviceWidth * 0.12),
         minimumSize: Size(deviceWidth * 0.3, deviceWidth * 0.12),
+      ),
+    ),
+    // iconButtonTheme: IconButtonThemeData(
+    //     style: IconButton.styleFrom(
+    //   foregroundColor: Colors.black,
+    //   backgroundColor: Colors.green.shade100,
+    // )),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
       ),
     ),
     // iconTheme: const IconThemeData(color:Color(0xff7F3DFF),size: 16),
@@ -115,23 +127,25 @@ ThemeData lightTheme(BuildContext context) {
         fontFamily: 'Nexa',
         fontWeight: FontWeight.bold,
       ),
+      titleLarge: TextStyle(
+        fontFamily: 'Nexa',
+        fontWeight: FontWeight.bold,
+      ),
       headlineSmall: TextStyle(
         fontFamily: 'Nexa',
         // fontWeight: FontWeight.w500,
       ),
-      // but: TextStyle(
-      //   fontFamily: 'Nexa',
-      //   fontWeight: FontWeight.bold,
-      // ),
     ),
-    dividerColor: Colors.grey,
+    dividerColor: Colors.grey.shade700,
   );
 }
 
 ThemeData darkTheme(BuildContext context) {
-  const primaryColor = Colors.white;
+  final primaryColor = Colors.grey.shade200;
+  const primaryBg = Color(0xff1b1b1b);
   final deviceWidth = MediaQuery.of(context).size.width;
   return ThemeData(
+    fontFamily: 'Nexa',
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
       TargetPlatform.android: CupertinoPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
@@ -139,12 +153,22 @@ ThemeData darkTheme(BuildContext context) {
     // fontFamily: 'nexa',
     useMaterial3: true,
     colorScheme: ColorScheme.dark(
-        primary: primaryColor,
-        onPrimary: Colors.white,
-        secondary: Colors.grey.shade500,
-        onSecondary: Colors.black,
-        tertiary: Colors.grey.shade200,
-        onTertiary: Colors.black),
+      primary: primaryColor,
+      onPrimary: Colors.grey.shade900,
+      secondary: Colors.grey.shade400,
+      onSecondary: Colors.grey.shade900,
+      tertiary: const Color(0xff3a3a3a),
+      onTertiary: Colors.grey.shade400,
+    ),
+    appBarTheme: AppBarTheme(
+      color: primaryBg,
+      shadowColor: Colors.grey.shade900,
+    ),
+    scaffoldBackgroundColor: const Color(0xff111111),
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: primaryBg,
+      shadowColor: Colors.grey.shade900,
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         textStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -153,48 +177,78 @@ ThemeData darkTheme(BuildContext context) {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.grey.shade900,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.15),
+        padding: EdgeInsets.symmetric(horizontal: deviceWidth * 0.12),
         maximumSize: Size(deviceWidth * 0.6, deviceWidth * 0.12),
         minimumSize: Size(deviceWidth * 0.3, deviceWidth * 0.12),
       ),
     ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
+    ),
     // iconTheme: const IconThemeData(color:Color(0xff7F3DFF),size: 16),
-    iconTheme: const IconThemeData(color: Colors.black),
-    primaryIconTheme: const IconThemeData(color: Color(0xff7F3DFF), size: 16),
+    iconTheme: const IconThemeData(color: Colors.white),
     inputDecorationTheme: InputDecorationTheme(
-      isDense: true,
-      fillColor: Colors.white,
-      hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
+      fillColor: Colors.grey.shade900,
+      filled: true,
+      hintStyle: TextStyle(color: Colors.grey.shade200, fontSize: 16),
       prefixStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       suffixIconColor: primaryColor,
       suffixStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       errorStyle:
           TextStyle(color: Colors.red.shade400, fontWeight: FontWeight.bold),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
       contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       constraints: BoxConstraints(
         maxWidth: deviceWidth * 0.8,
       ),
-      border: const OutlineInputBorder(borderSide: BorderSide.none),
-      enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
-      focusedBorder: const OutlineInputBorder(borderSide: BorderSide.none),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: primaryColor, width: 2.0),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: primaryColor, width: 2.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Colors.red, width: 1.5),
+      ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        shape: CircleBorder(), elevation: 5),
+      shape: CircleBorder(),
+      elevation: 5,
+    ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
-        color: primaryColor,
-        fontSize: 40,
+        fontFamily: 'Nexa',
         fontWeight: FontWeight.bold,
       ),
-      displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      labelLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      labelMedium: TextStyle(fontSize: 20),
-      labelSmall: TextStyle(fontSize: 16),
+      displayMedium: TextStyle(
+        fontFamily: 'Nexa',
+        fontWeight: FontWeight.bold,
+      ),
+      titleLarge: TextStyle(
+        fontFamily: 'Nexa',
+        fontWeight: FontWeight.bold,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'Nexa',
+        // fontWeight: FontWeight.w500,
+      ),
     ),
+    dividerColor: Colors.grey.shade200,
   );
 }

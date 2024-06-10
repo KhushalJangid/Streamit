@@ -6,7 +6,7 @@ import 'package:streamit/constants.dart';
 
 Future<List<CourseMedia>> loadData() async {
   try {
-    final wishlist = await MasterDB.instance.readAllNotes(wishlist_table_name);
+    final wishlist = await MycourseDB.instance.all();
     if (wishlist.isEmpty) {
       final token = await const FlutterSecureStorage().read(key: "token");
       final response = await Dio().get(

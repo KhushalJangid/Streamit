@@ -1,5 +1,3 @@
-const String wishlist_table_name = "wishlist";
-
 class CourseField {
   static const String id = "id";
   static const String title = "title";
@@ -62,7 +60,7 @@ class CourseMedia {
       CourseField.type: type,
       CourseField.uniqueName: uniqueName,
       CourseField.price: price,
-      CourseField.uploaded: uploaded,
+      CourseField.uploaded: uploaded.toString(),
     };
   }
 }

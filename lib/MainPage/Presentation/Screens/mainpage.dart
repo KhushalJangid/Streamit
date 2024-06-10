@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streamit/MyCoursePage/Presentation/coursepage.dart';
 import 'package:streamit/MyCoursePage/bloc/course_bloc.dart';
+import 'package:streamit/Player/Presentation/minplayer.dart';
 import 'package:streamit/WishlistPage/Presentation/wishlist.dart';
-import 'package:streamit/WishlistPage/bloc/wishlist_bloc.dart';
+// import 'package:streamit/WishlistPage/bloc/wishlist_bloc.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -43,14 +44,21 @@ class MainPage extends StatelessWidget {
       providers: [
         BlocProvider(create: ((context) => HomeBloc())),
         BlocProvider(create: ((context) => AccountBloc())),
-        BlocProvider(create: ((context) => WishlistBloc())),
         BlocProvider(create: ((context) => CourseBloc())),
       ],
       child: BlocBuilder<TabCubit, int>(
         builder: (context, state) {
           return SafeArea(
             child: Scaffold(
-              body: screens[state],
+              body: Stack(
+                children: [
+                  screens[state],
+                  const Align(
+                    alignment: Alignment.bottomCenter,
+                    child: MiniPlayer(),
+                  ),
+                ],
+              ),
               bottomNavigationBar: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
@@ -88,6 +96,9 @@ class MainPage extends StatelessWidget {
                                   ? filleditems[state]
                                   : items[items.indexOf(e)],
                               size: 30,
+                              color: state == items.indexOf(e)
+                                  ? Colors.black
+                                  : null,
                             ),
                           ),
                         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:streamit/HomePage/Presentation/homepage.dart';
 import 'package:streamit/MyCoursePage/bloc/course_bloc.dart';
+import 'package:streamit/components.dart';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -32,7 +32,7 @@ class _CoursePageState extends State<CoursePage> {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    for (var course in state.data) CourseCard(media: course)
+                    for (var course in state.data) CourseTile(media: course)
                   ],
                 ),
               );

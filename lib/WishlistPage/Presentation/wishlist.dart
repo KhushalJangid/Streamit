@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:streamit/HomePage/Presentation/homepage.dart';
 import 'package:streamit/WishlistPage/bloc/wishlist_bloc.dart';
+import 'package:streamit/components.dart';
 
 class WishlistPage extends StatefulWidget {
   const WishlistPage({super.key});
@@ -30,7 +30,7 @@ class _WishlistPageState extends State<WishlistPage> {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    for (var course in state.data) CourseCard(media: course)
+                    for (var course in state.data) CourseTile(media: course)
                   ],
                 ),
               );
